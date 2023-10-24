@@ -1,0 +1,72 @@
+<style>
+    .truncate {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        resize: horizontal;
+    }
+</style>
+{% for team in teams %}
+    <div class="col-md-4">
+        <div class="card-xl-stretch me-md-6" style="margin-bottom: 80px">
+
+            <a class=" overlay mb-4" data-fslightbox="lightbox-hot-sales">
+                <div>
+                    <div class="font-weight-bold small pt-2 playv" style="float: right" id="play_{{ team.id }}" data-id="{{ team.id }}">
+                        Cliquer pour voir le video <i class="fa fa-play small"></i>
+                    </div>
+                    <div class="font-weight-bold small pt-2 stopv" style="float: right"  id="stop_{{ team.id }}" data-id="{{ team.id }}">
+                        Cliquer pour arrêter le video <i class="fa fa-stop small"></i>
+                    </div>
+                </div>
+                <video style="margin-top: 2%" alt="Card image cap" class="card-img-top sample_video" controls id="{{ team.id }}">
+                    <source src="{{ asset('images/video/'~ team.fileName) }}"
+                            type="video/mp4" title="efefefef">
+                </video>
+            </a>
+
+            <div class="video-title position-absolute text-dark p-3 p-xl-4" id="video_{{ team.id }}">
+
+                <div id="hello_{{ team.id }}" style="">
+                    <div class="font-weight-bold pb-2" >
+                        Titre :  {{ team.title? team.title: '' }}
+                    </div>
+                    <div class="font-weight-bold pb-2 truncate" style="text-align: justify"  data-toggle="tooltip" data-placement="bottom" title="{{ team.description }}">
+                        Description: <span style="color: #009ef7"> {{ team.description? team.description : '' }}</span>
+                    </div>
+                    <div class="font-weight-bold pb-2" >
+                        Date de publication :  {{ team.publishedAt? team.publishedAt|date('d-m-Y') : '' }}
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+{% endfor %}
+
+<script>
+    $(document).ready(function () {
+        $('.stopv').css('display', 'none');
+    });
+    $('.playv').click(function () {
+        var id=$(this).data('id');
+        $('#'+id).trigger('play');
+        $('#stop_'+id).css('display', '');
+        $('#play_'+id).css('display', 'none');
+        $('#hello_'+id).css('display', 'none');
+        $('#video_'+id).css('background', 'none');
+
+    });
+    $('.stopv').click(function () {
+        var id=$(this).data('id');
+        $('#'+id).trigger('pause');
+        $('#stop_'+id).css('display', 'none');
+        $('#play_'+id).css('display', '')
+        $('#hello_'+id).css('display', '');
+        // $('#video_'+id).css('background', 'rgba(0, 0, 0, 0.5)');
+    });
+</script>

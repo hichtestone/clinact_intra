@@ -1,0 +1,148 @@
+{% extends 'layout/app1.html.twig' %}
+
+{% block title %}CLINACT{% endblock %}
+{% block  stylesheets%}
+{% endblock %}
+{% block breadcrumb %}
+    <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column me-3">
+            <!--begin::Title-->
+            <h1 class="d-flex text-white fw-bolder my-1 fs-3">Mots de président Audit Trails</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">
+                    <a href="{{ path('home') }}" class="text-white text-hover-primary">Home</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">Mots de président Audit Trails</li>
+                <!--end::Item-->
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}
+{% block body %}
+    <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+        <div class="content flex-row-fluid" id="kt_content">
+            <div class="card">
+                <div class="text-center mb-12" style="margin: 15px !important;">
+                    <h5 class="fs-2hx text-dark mb-5" style="text-align: center!important;margin-top: 20px;text-transform: uppercase">Mots de présidents Audit Trails</h5>
+                </div>
+                <div class="card-header border-0 pt-6" style="margin-bottom: 25px !important;">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1 " style="margin-right: 20px" >
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+													<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+												</svg>
+											</span>
+                            <input type="date" id="searchByDate" data-kt-subscription-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Filter par date de création..."/>
+                        </div>
+                        <div class="d-flex align-items-center position-relative my-1 " style="margin-right: 20px" >
+                            <select class="form-control form-control-solid w-250px ps-14" id="searchByType" >
+                                <option value="">Filter par type</option>
+                                <option value="1">Création</option>
+                                <option value="2">Modification</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body pt-0" id="president">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                        <thead>
+                        <tr class="text-start text-dark fw-bolder fs-7 text-uppercase gs-0">
+                            <th style="white-space: nowrap" class="">Modifié le</th>
+                            <th style="white-space: nowrap" class="">Modifié par</th>
+                            <th class="">Type</th>
+                            <th class="">Détails</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-gray-600 fw-bold">
+                        {% for word in words %}
+                            <tr>
+
+                                <td style="white-space: nowrap">{{word.date? word.date|date('d-m-Y') : '' }}</td>
+                                <td>
+                                    {{ word.user? word.user.userName : "" }}
+                                </td>
+                                <td>
+                                    <div class="badge badge-light-info fw-bolder">
+                                        {{ word.modifType==1? "Création" : "Modification" }}
+                                    </div>
+                                </td>
+                                <td style="overflow-wrap: anywhere; text-align: distribute;">
+                                    {{ word.details|json_encode() }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var searchRequest = null;
+
+        $("#searchByDate").on('change',function () {
+            var minlength = 0;
+            var that      = this;
+            var value     = $(that).val();
+            if (value.length >= minlength){
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "GET",
+                    url: "{{ path('audit.trail.ajax.search.date') }}",
+                    dataType: "text",
+                    data: {
+                        'q' : value
+                    },
+                    success: function (data){
+                        if (value == $(that).val()){
+                            $("#president").html(data);
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#searchByType").on('change',function () {
+            var minlength = 0;
+            var that      = this;
+            var value     = $(that).val();
+            if (value.length >= minlength){
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "GET",
+                    url: "{{ path('audit.trail.ajax.search.type') }}",
+                    dataType: "text",
+                    data: {
+                        'q' : value
+                    },
+                    success: function (data){
+                        if (value == $(that).val()){
+                            $("#president").html(data);
+                        }
+                    }
+                });
+            }
+        });
+
+    </script>
+{% endblock %}

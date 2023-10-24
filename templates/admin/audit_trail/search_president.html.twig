@@ -1,0 +1,29 @@
+<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+    <thead>
+    <tr class="text-start text-dark fw-bolder fs-7 text-uppercase gs-0">
+        <th style="white-space: nowrap" class="">Modifié le</th>
+        <th style="white-space: nowrap" class="">Modifié par</th>
+        <th class="">Type</th>
+        <th class="">Détails</th>
+    </tr>
+    </thead>
+    <tbody class="text-gray-600 fw-bold">
+    {% for word in words %}
+        <tr>
+
+            <td style="white-space: nowrap">{{word.date? word.date|date('d-m-Y') : '' }}</td>
+            <td>
+                {{ word.user? word.user.userName : "" }}
+            </td>
+            <td>
+                <div class="badge badge-light-info fw-bolder">
+                    {{ word.modifType==1? "Création" : "Modification" }}
+                </div>
+            </td>
+            <td style="overflow-wrap: anywhere; text-align: distribute;">
+                {{ word.details|json_encode() }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

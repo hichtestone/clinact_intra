@@ -1,0 +1,45 @@
+<!--begin::Card-->
+<div class="card card-flush">
+    <div class="card-body p-5">
+        <!--begin::Loader-->
+        <div class="d-flex d-none" data-kt-filemanger-table="copy_link_generator">
+            <!--begin::Spinner-->
+            <div class="me-5" data-kt-indicator="on">
+																				<span class="indicator-progress">
+																					<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+																				</span>
+            </div>
+            <!--end::Spinner-->
+            <!--begin::Label-->
+            <div class="fs-6 text-dark">Generating Share Link...</div>
+            <!--end::Label-->
+        </div>
+        <!--end::Loader-->
+        <!--begin::Link-->
+        <div class="d-flex flex-column text-start" data-kt-filemanger-table="copy_link_result">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                <label class="form-label" style="margin-bottom: 10px !important;">fiche de connaissance<span class="text-danger">*</span></label>
+                {{ form_widget(form.imageFile) }}
+                <div class="form-error" style="color: red">
+                    {{ form_errors(form.imageFile) }}
+                </div>
+            </div>
+            <div class="d-flex ">
+                <button>
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr085.svg-->
+                    <span class="svg-icon svg-icon-2 svg-icon-success me-3">
+																					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																						<path d="M9.89557 13.4982L7.79487 11.2651C7.26967 10.7068 6.38251 10.7068 5.85731 11.2651C5.37559 11.7772 5.37559 12.5757 5.85731 13.0878L9.74989 17.2257C10.1448 17.6455 10.8118 17.6455 11.2066 17.2257L18.1427 9.85252C18.6244 9.34044 18.6244 8.54191 18.1427 8.02984C17.6175 7.47154 16.7303 7.47154 16.2051 8.02984L11.061 13.4982C10.7451 13.834 10.2115 13.834 9.89557 13.4982Z" fill="black"></path>
+																					</svg>
+																				</span>
+                    <!--end::Svg Icon-->
+
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <!--end::Link-->
+    </div>
+</div>
+<!--end::Card-->

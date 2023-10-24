@@ -1,0 +1,185 @@
+{% extends 'layout/app1.html.twig' %}
+
+{% block title %}{% endblock %}
+{% block  stylesheets%}
+    <style>
+        .truncate {
+            max-width:100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+{% endblock %}
+ {% block breadcrumb %}
+     <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+         <div class="page-title d-flex flex-column me-3">
+             <h1 class="d-flex text-white fw-bolder my-1 fs-3">Teams MTH</h1>
+             <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                 <li class="breadcrumb-item text-white opacity-75">
+                     <a href="{{ path('home') }}" class="text-white text-hover-primary">Home</a>
+                 </li>
+                 <li class="breadcrumb-item">
+                     <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                 </li>
+                 <li class="breadcrumb-item text-white opacity-75">Liste des teams MTH</li>
+             </ul>
+         </div>
+
+     </div>
+ {% endblock %}
+{% block body %}
+    <div class="container">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-column flex-xl-row p-7">
+                    <div class="flex-lg-row-fluid me-xl-15 mb-20 mb-xl-0">
+                        <div class="mb-0">
+                            <form method="post" action="#" class="form mb-15">
+                                <div class="position-relative">
+                                    <span class="svg-icon svg-icon-1 svg-icon-primary position-absolute top-50 translate-middle ms-9">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+																	<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+																</svg>
+															</span>
+                                    <input type="text" class="form-control form-control-lg form-control-solid ps-14" id="searchByCreteriaMth" name="Flitrer " value="" placeholder="Flitrer" />
+                                </div>
+                            </form>
+                            <div class="row">
+                                <h1 class="text-dark mb-10" style="text-transform: uppercase; float: left ">Liste des Teams MTH</h1>
+
+                            </div>
+
+                            <div class="mb-10" id="teams">
+                                {% for team in teams %}
+                                <div class="d-flex mb-10">
+                                    <span class="svg-icon svg-icon-2x me-5 ms-n1 mt-2 svg-icon-success">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM11.7 17.7L16.7 12.7C17.1 12.3 17.1 11.7 16.7 11.3C16.3 10.9 15.7 10.9 15.3 11.3L11 15.6L8.70001 13.3C8.30001 12.9 7.69999 12.9 7.29999 13.3C6.89999 13.7 6.89999 14.3 7.29999 14.7L10.3 17.7C10.5 17.9 10.8 18 11 18C11.2 18 11.5 17.9 11.7 17.7Z" fill="black" />
+																	<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
+																</svg>
+															</span>
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <a href="{{ path('admin.teamMth.show', {'id': team.id}) }}" class="text-dark text-hover-primary fs-4 me-3 fw-bold">
+                                                {{ team.title?team.title : '' }}
+                                            </a>
+                                            <span class="badge badge-light my-1">publié le : {{ team.createdAt?team.createdAt|date("d-m-Y à H:i") }}</span>
+                                        </div>
+                                        <span class="text-muted fw-bold fs-6">{{ team.description? team.description : '' }}</span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                            <!--end::Tickets List-->
+                            <!--begin::Pagination-->
+                            <ul class="pagination">
+                                <li class="page-item previous disabled">
+                                    <a href="#" class="page-link">
+                                        <i class="previous"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">4</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">5</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">6</a>
+                                </li>
+                                <li class="page-item next">
+                                    <a href="#" class="page-link">
+                                        <i class="next"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--end::Pagination-->
+                        </div>
+                        <!--end::Tickets-->
+                    </div>
+                    <!--end::Content-->
+                    <!--begin::Sidebar-->
+                    <div class="flex-column flex-lg-row-auto w-100 mw-lg-300px mw-xxl-350px">
+                        <!--begin::More channels-->
+                    {% include 'admin/team_mth/new.html.twig' %}
+
+                    </div>
+                    <!--end::Sidebar-->
+                </div>
+                <!--end::Layout-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--begin::Modal - Add task-->
+
+    <!--end::Modal - Add task-->
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+        $(document).ready(function () {
+            /*
+                        $("#showPDFModal").on("show.bs.modal", function (e) {
+                            var link = $(e.relatedTarget);
+                            // console.log(link);
+                            var path = $(this).find(".modal-content").load(link.attr('href'));
+
+                            // console.log(path);
+                        });*/
+            $("#kt_modal_show_user").on("show.bs.modal", function (e) {
+
+                var link = $(e.relatedTarget);
+                console.log(link);
+                var path = $(this).find(".modal-content").load(link.attr('href'));
+
+                // console.log(path);
+            });
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function() {
+            var searchRequest = null;
+
+            $("#searchByCreteriaMth").keyup(function () {
+                var minlength = 0;
+                var that      = this;
+                var value     = $(that).val();
+                if (value.length >= minlength){
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('teamMth.ajax.search.title') }}",
+                        dataType: "text",
+                        data: {
+                            'q' : value
+                        },
+                        success: function (data){
+                            if (value == $(that).val()){
+                                $("#teams").html(data);
+                            }
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}

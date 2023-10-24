@@ -1,0 +1,67 @@
+
+<div class="card">
+    <div class="card-header">
+        <h2 style="padding: 15px">Détails utilisateur {{ user.lastName }} {{ user.firstName }}</h2>
+    </div>
+    <div class="card-body">
+        {{ form_start(form, {'action': path('admin.user.edit',{'id': user.id})}) }}
+
+        <div class="row">
+            <div class="col-lg-6 ">
+                <div class="mb-3">
+                    <label class="form-label" style="margin-bottom: 10px !important;">Nom<span class="text-danger">*</span></label>
+                    <input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value=" {{ user.lastName }}" disabled />
+                </div>
+            </div>
+            <div class="col-lg-6 ">
+                <div class="mb-3">
+                    <label class="form-label" style="margin-bottom: 10px !important;">Prénom<span class="text-danger">*</span></label>
+                    <input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value="{{ user.firstName }}" disabled />
+                </div>
+            </div>
+            <div class="col-lg-6 ">
+                <div class="mb-3">
+                    <label class="form-label" style="margin-bottom: 10px !important;">email<span class="text-danger">*</span></label>
+                    <input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value=" {{ user.email }}" disabled />
+                </div>
+            </div>
+
+            <div class="col-lg-6 ">
+                <div class="mb-3">
+                    <label class="form-label" style="margin-bottom: 10px !important;">Numéro de téléphone<span class="text-danger">*</span></label>
+                    <input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value=" {{ user.phone }}" disabled />
+                </div>
+            </div>
+            <div class="col-lg-4 ">
+                <div class="mb-3">
+                    <label class="form-label" style="margin-bottom: 10px !important;">Mission<span class="text-danger">*</span></label>
+                    <input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value=" {{ user.job.label }}" disabled />
+                </div>
+            </div>
+
+            <div class="col-lg-12 ">
+                <div class="mb-3">
+                    <label class="form-label" style="margin-bottom: 30px !important;">Photo de profil<span class="text-danger">*</span></label>
+                    <div class="image-input-outline" style="margin-bottom: 15px" >
+                        <img src="{{ asset('images/users/'~user.fileName) }}"  class="image-input-wrapper w-125px h-125px">
+                    </div>
+
+                    {{ form_widget(form.imageFile) }}
+                    <div class="form-error" style="color: red">
+                        {{ form_errors(form.imageFile) }}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-12">
+            <div style="float: right" >
+                <button type="submit" class="btn btn btn-primary" style="margin-top: 5px">Modifier</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+

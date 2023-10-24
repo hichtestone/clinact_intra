@@ -1,0 +1,48 @@
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-12 ">
+            <div class="mb-3">
+                <label class="form-label" style="margin-bottom: 10px !important;">Titre<span class="text-danger">*</span></label>
+                {{ form_widget(form.title) }}
+                <div class="form-error" style="color: red">
+                    {{ form_errors(form.title) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12" style="margin-left: 15px"><h5>Liste des mot clés :</h5> <div id="addbtn"></div></div>
+        <ul class="todosBuilding" style="list-style: none;" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+            {% for tag in form.tags %}
+                <li class="item row">
+                    <div class="col-md-12 ">
+                        <div class="form-group">
+                            <label class="text-label">Nom<span style="color: red">*</span> </label>
+                            {{ form_widget(tag.name) }}
+                            <div class="form-error" style="color: red">
+                                {{ form_errors(tag.name) }}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            {% endfor %}
+        </ul>
+
+        <div class="col-lg-12 ">
+            <div class="mb-3">
+                <label class="form-label" style="margin-bottom: 10px !important;">Video<span class="text-danger">*</span></label>
+                {{ form_widget(form.imageFile) }}
+                <div class="form-error" style="color: red">
+                    {{ form_errors(form.imageFile) }}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-lg-12">
+        <div style="float: right" >
+            <button type="submit" class="btn btn btn-primary" style="margin-bottom: 50px; margin-top: 50px">{% if edit %} Modifier{% else %} Enregistrer{% endif %}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}

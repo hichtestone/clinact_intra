@@ -1,0 +1,266 @@
+{% extends 'layout/app1.html.twig' %}
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+    <div class="row g-5 g-xl-8">
+
+        <div class="col-xl-4">
+
+            <div class="card card-xl-stretch mb-xl-3 ">
+
+                <div class="card-header border-0 py-5 h-150px" style="background-color: #003151">
+                    <a style="padding-top:42px; text-transform: uppercase;" href="#" class="text-white text-hover-primary fw-bolder fs-2" >Mot du président </a>
+                </div>
+                {% if  lastWord != null%}
+                    <div class="card-body d-flex flex-column" style="background-image: url({{ asset('images/presedentWord/'~lastWord.fileName) }}); background-size: 450px; opacity:0.7;">
+                            <div class="flex-grow-1">
+                                <a href="" class="text-gray-800 text-white fw-bolder fs-6" style="color: white">
+                                 {{ lastWord.content|raw }}
+                                </a>
+                            </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-xl-8">
+            <div class="row gx-5 gx-xl-8 mb-5 mb-xl-8">
+                <div class="col-xl-12">
+                    <div class="card h-150px bgi-no-repeat bgi-size-cover card-xl-stretch" style="background-image:url('assets/media/stock/600x400/img-75.jpg')">
+                        <div class="card-header border-0 py-5 h-150px" style="background-color: #003151">
+                            <a href="#" class="text-white text-hover-primary fw-bolder fs-2" style="padding-top:42px; text-transform: uppercase;"  data-bs-toggle="modal" data-bs-target="#kt_modal_create_app" >LES RENDEZ-VOUS À NE PAS MANQUER </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row gx-5 gx-xl-8 mb-5 mb-xl-8">
+                <div class="col-xl-6">
+                    <div class="card h-175px bgi-no-repeat bgi-size-contain card-xl-stretch mb-5 mb-xl-8" style="background-color: white; background-position: right; margin-top: 20px !important;">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h2 class="text-dark fw-bolder mb-5">WEBINAR</h2>
+                        </div>
+                    </div>
+                    <div class="row gx-5 gx-xl-8">
+                        <div id="kt_carousel_1_carousel" class="carousel carousel-custom slide" data-bs-ride="carousel" data-bs-interval="8000">
+                            <div class="d-flex align-items-center justify-content-between flex-wrap">
+                                <ol class="p-0 m-0 carousel-indicators carousel-indicators-dots">
+                                    {% for webinar in webinars %}
+                                        <li data-bs-target="#kt_carousel_1_carousel" data-bs-slide-to="{{ loop.index }}" class="ms-1 {% if loop.first %} active {% endif%}"></li>
+                                    {% endfor %}
+                                </ol>
+                            </div>
+                            <div class="carousel-inner pt-8">
+                                {% for webinar in webinars %}
+                                    <div class="carousel-item {% if loop.first %} active {% endif%}">
+                                        <video style="margin-top: 2%" alt="Card image cap" class="card-img-top sample_video" controls id="{{ webinar.id }}">
+                                            <source src="{{ asset('images/video/'~ webinar.brochureFilename) }}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="card h-100 bgi-no-repeat bgi-size-cover card-xl-stretch mb-5 mb-xl-8" >
+
+                            <div class="card-header border-0">
+                                <h3 class="card-title fw-bolder text-dark">TEAMS MTH</h3>
+                            </div>
+
+                            <div class="card-body pt-2">
+                                {% for team in teams %}
+                                    <div class="d-flex align-items-center mb-8">
+                                    <span class="bullet bullet-vertical h-40px bg-success"></span>
+                                    <div class="form-check form-check-custom form-check-solid mx-5" data-bs-toggle="modal" data-bs-target="#showPDFModal">
+                                        <img src="{{ asset('upload/team_mth_document/img/'~team.id~'.png') }}" width="30px" height="30px">
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">{{ team.title }}</a>
+                                        <span class="text-muted fw-bold d-block">{{ team.description }}</span>
+                                    </div>
+                                    <span class="badge badge-light-success fs-8 fw-bolder">{{ team.publishedAt|date('d/m/Y') }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row gy-5 g-xl-8">
+        <div class="col-xl-12">
+            <div class="card card-xl-stretch">
+                <div class="card-header border-0 bg-danger p-12"style="background-color: #003151 !important; margin-bottom: 20px !important; padding-bottom: 55px !important;">
+                    <h5 class="card-title text-white text-hover-primary fw-bolder fs-2">JOURNAL INTERNE</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div id="kt_file_manager_list_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive">
+                            <table id="kt_file_manager_list" data-kt-filemanager-table="blank" class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
+                                <!--begin::Table head-->
+                                <thead>
+
+                                 </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                                <tbody class="fw-bold text-gray-600">
+                                <tr class="odd">
+                                  {#  <td class="dataTables_empty">
+                                        <div class="d-flex flex-column flex-center">
+                                            <div  class="fs-1 text-gray-500">-Titre :<br><span class="fs-1 fw-bolder text-dark ">{{ lastNew.title? lastNew.title : '' }}</span> <br>
+                                                -Description : <span class=" fw-bolder text-dark ">{{ lastNew.description ? lastNew.description|raw :''}}</span>
+                                            </div>
+                                        </div>
+                                    </td>#}
+                                    <td class="dataTables_empty">
+                                            <div class="d-flex flex-column flex-center">
+
+                                                <a href="{{ path('showNewslatter',{'id':lastNew.id}) }}" data-bs-toggle="modal" data-bs-target="#kt_modal_show_news" >
+                                                    <img src="{{ asset('images/news/img/'~lastNew.id~'.png') }}" class="mw-200px">
+                                                </a>
+                                                <div class="d-flex flex-column flex-center">
+                                                    <div  class="fs-1 text-gray-500">Titre : <span class="fs-1 fw-bolder text-dark ">{{ lastNew.title? lastNew.title : '' }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <!--end::Table body-->
+                            </table></div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_file_manager_list_paginate" style="visibility: hidden;"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_file_manager_list_previous"><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item next disabled" id="kt_file_manager_list_next"><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="1" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row gy-5 g-xl-8">
+        <div class="col-xl-12">
+            <div class="card card-xl-stretch">
+                <div class="card-header border-0 bg-danger p-12"style="background-color: #003151 !important; margin-bottom: 57px !important;padding-bottom: 55px !important;">
+                    <h5 class="card-title text-white text-hover-primary fw-bolder fs-2">SUIVEZ L’ACTIVITE LINKEDIN</h5>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col">
+                            <img src="{{ asset('images/logo-linkedin.png') }}" width="60px" height="60px" style="margin-left: 10px !important;">
+                        </div>
+                        <div class="col">
+                            <label class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_personal">
+                                <span class="d-block fw-bold text-start">
+                                    <span onclick="window.open('https://fr.linkedin.com/company/multihealth?trk=organization-update_share-update_actor-text')" class="text-dark fw-bolder d-block fs-4 mb-2" style="white-space: nowrap">Groupe Multihealth</span>
+                                </span>
+                            </label>
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                        <div class="col">
+                            <label class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_personal">
+                                <span class="d-block fw-bold text-start">
+                                    <span  onclick="window.open('https://fr.linkedin.com/company/clinact?trk=organization-update_share-update_actor-text')" class="text-dark fw-bolder d-block fs-4 mb-2">CLINACT</span>
+                                </span>
+                            </label>
+                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+
+                        <div class="col">
+                            <label class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_personal">
+                                <span class="d-block fw-bold text-start">
+                                    <span onclick="window.open('https://fr.linkedin.com/company/tempopharma')" class="text-dark fw-bolder d-block fs-4 mb-2">TempoPHARMA</span>
+                                </span>
+                            </label>
+                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+
+                        <div class="col">
+                            <label class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_personal">
+                                <span class="d-block fw-bold text-start">
+                                    <span onclick="window.open('https://fr.linkedin.com/company/formatis')"  class="text-dark fw-bolder d-block fs-4 mb-2">FORMATIS</span>
+                                </span>
+                            </label>
+                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+
+                        <div class="col">
+                            <label class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_personal">
+                                <span class="d-block fw-bold text-start">
+                                    <span onclick="window.open('https://fr.linkedin.com/company/clinfile')" class="text-dark fw-bolder d-block fs-4 mb-2">Clinefile</span>
+                                </span>
+                            </label>
+
+                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                        <div class="col">
+                            <label class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_personal">
+                                <span class="d-block fw-bold text-start">
+                                    <span  onclick="window.open('https://fr.linkedin.com/company/statitec')"  class="text-dark fw-bolder d-block fs-4 mb-2">Statitec</span>
+                                </span>
+                            </label>
+                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="kt_modal_show_news" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-900px" role="document">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="showPDFModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2> Visualitation document Team MTH</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+								</svg>
+							</span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body py-lg-10 px-lg-10">
+                    <iframe height="600px" width="100%"
+                            src="{{ asset('/upload/team_mth_document/') }}">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+<script>
+    $(document).ready(function () {
+
+        $("#kt_modal_show_news").on("show.bs.modal", function (e) {
+
+            var link = $(e.relatedTarget);
+            console.log(link);
+            var path = $(this).find(".modal-content").load(link.attr('href'));
+
+            // console.log(path);
+        });
+    });
+</script>
+{% endblock %}

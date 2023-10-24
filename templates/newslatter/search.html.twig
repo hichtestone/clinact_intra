@@ -1,0 +1,40 @@
+<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_subscriptions_table">
+    <thead>
+    <tr class="text-start text-gray-900 fw-bolder fs-7 text-uppercase gs-0">
+        <th class="min-w-125px">Titre</th>
+        <th class="min-w-125px">Description</th>
+        <th class="min-w-125px">Date de creation</th>
+    </tr>
+    </thead>
+
+    <tbody class="fw-bold text-gray-600">
+    {% for new in news %}
+
+        <tr>
+            <td>
+                <a href="{{ path('showNewslatter',{'id':new.id}) }}" class="showPDF text-gray-800 text-hover-primary mb-1"  data-bs-toggle="modal" data-bs-target="#showPDFModal">{{new.title }}</a>
+            </td>
+
+            <td>
+                <a  class="text-gray-600 text-hover-primary mb-1">{{ new.description|raw }}</a>
+            </td>
+
+            <td>
+                <a  class="text-gray-600 text-hover-primary mb-1"> {{ new.createdAt|date('d-m-Y') }}</a>
+            </td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script src="http://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script>
+
+    $(document).ready( function () {
+        $('#kt_subscriptions_table').DataTable({
+            "paging" :false,
+            "info"   :false,
+            "filter" : false,
+        });
+    } );
+</script>

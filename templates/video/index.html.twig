@@ -1,0 +1,342 @@
+{% extends 'layout/app1.html.twig' %}
+
+{% block title %}Admin_PresedentWordController!{% endblock %}
+{% block  stylesheets%}
+<style>
+    .truncate {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        resize: horizontal;
+    }
+</style>
+{% endblock %}
+ {% block breadcrumb %}
+     <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+         <!--begin::Page title-->
+         <div class="page-title d-flex flex-column me-3">
+             <!--begin::Title-->
+             <h1 class="d-flex text-white fw-bolder my-1 fs-3">Liste des webinaires</h1>
+             <!--end::Title-->
+             <!--begin::Breadcrumb-->
+             <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                 <!--begin::Item-->
+                 <li class="breadcrumb-item text-white opacity-75">
+                     <a href="{{ path('home') }}" class="text-white text-hover-primary">Home</a>
+                 </li>
+                 <!--end::Item-->
+                 <!--begin::Item-->
+
+                 <li class="breadcrumb-item">
+                     <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                 </li>
+                 <!--end::Item-->
+                 <!--begin::Item-->
+                 <li class="breadcrumb-item text-white opacity-75">Liste webinaires</li>
+                 <!--end::Item-->
+             </ul>
+         </div>
+
+     </div>
+ {% endblock %}
+
+{% block body %}
+
+    <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+        <div class="content flex-row-fluid" id="kt_content">
+            <div class="card">
+
+                <div class="card-body p-lg-17">
+                    <button class="btn btn-outline-primary" style="float: right;" id="TeamMth">Team MTH</button>
+
+                    <div class="mb-19" id="webinair">
+                        <div class="text-center mb-17">
+                            <h3 class="fs-2hx text-dark mb-6" style="text-transform: uppercase">Liste des Webinaires</h3>
+                            <div class="row">
+                                <div class="d-flex align-items-center position-relative my-1 col-md-3 " style="margin-right: 20px" >
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+													<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+												</svg>
+											</span>
+                                    <input type="text" id="searchByTitle" data-kt-subscription-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Filter par critère..."/>
+                                </div>
+                                <div class="d-flex align-items-center position-relative my-1 col-md-3 " style="margin-right: 20px" >
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+													<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+												</svg>
+											</span>
+                                    <input type="date" id="searchByDate" data-kt-subscription-table-filter="search" class="form-control form-control-solid w-250px ps-14" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-10" id="webbinaire">
+                            {% for video in videos %}
+                            <div class="col-md-4">
+                                <div class="card-xl-stretch me-md-6" style="margin-bottom: 80px">
+
+                                    <a class=" overlay mb-4" data-fslightbox="lightbox-hot-sales">
+                                        <div>
+                                            <div class="font-weight-bold small pt-2 playv" style="float: right" id="play_{{ video.id }}" data-id="{{ video.id }}">
+                                                Cliquer pour voir le video <i class="fa fa-play small"></i>
+                                            </div>
+                                            <div class="font-weight-bold small pt-2 stopv" style="float: right"  id="stop_{{ video.id }}" data-id="{{ video.id }}">
+                                                Cliquer pour arrêter le video <i class="fa fa-stop small"></i>
+                                            </div>
+                                        </div>
+                                        <video style="margin-top: 2%" alt="Card image cap" class="card-img-top sample_video" controls id="{{ video.id }}">
+                                            <source src="{{ asset('images/video/'~ video.brochureFilename) }}"
+                                                    type="video/mp4" title="efefefef">
+                                        </video>
+                                    </a>
+
+                                    <div class="video-title position-absolute text-dark p-3 p-xl-4" id="video_{{ video.id }}">
+
+                                        <div id="hello_{{ video.id }}" style="">
+                                            <div class="font-weight-bold pb-2" >
+                                               Titre :  {{ video.title? video.title: '' }}
+                                            </div>
+                                            <div class="font-weight-bold pb-2" >
+                                               Date :  {{ video.createdAt? video.createdAt|date('d-m-Y') : '' }}
+                                            </div>
+                                            <div class="small" >
+                                                Liste des mots clés :
+                                                {% for tag in video.tags %}
+                                                    <span class="badge badge-light"> {{ tag.name? '#'~tag.name : '' }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-19" id="Team" style="display: none">
+                        <div class="text-center mb-17">
+                            <h3 class="fs-2hx text-dark mb-6" style="text-transform: uppercase">Liste des Teams MTH</h3>
+                            <div class="row">
+                                <div class="d-flex align-items-center position-relative my-1 col-md-3 " style="margin-right: 20px" >
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+													<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+												</svg>
+											</span>
+                                    <input type="text" id="searchByCreteriaMth" data-kt-subscription-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Filter par critère..."/>
+                                </div>
+                                <div class="d-flex align-items-center position-relative my-1 col-md-3 " style="margin-right: 20px" >
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+													<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+												</svg>
+											</span>
+                                    <input type="date" id="searchByDateMth" data-kt-subscription-table-filter="search" class="form-control form-control-solid w-250px ps-14" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-10" id="teams">
+                            {% for team in teams %}
+                                <div class="col-md-4">
+                                    <div class="card-xl-stretch me-md-6" style="margin-bottom: 80px">
+
+                                        <a class=" overlay mb-4" data-fslightbox="lightbox-hot-sales">
+                                            <div>
+                                                <div class="font-weight-bold small pt-2 playv" style="float: right" id="play_{{ team.id }}" data-id="{{ team.id }}">
+                                                    Cliquer pour voir le video <i class="fa fa-play small"></i>
+                                                </div>
+                                                <div class="font-weight-bold small pt-2 stopv" style="float: right"  id="stop_{{ team.id }}" data-id="{{ team.id }}">
+                                                    Cliquer pour arrêter le video <i class="fa fa-stop small"></i>
+                                                </div>
+                                            </div>
+                                            <video style="margin-top: 2%" alt="Card image cap" class="card-img-top sample_video" controls id="{{ team.id }}">
+                                                <source src="{{ asset('images/video/'~ team.fileName) }}"
+                                                        type="video/mp4" title="efefefef">
+                                            </video>
+                                        </a>
+
+                                        <div class="video-title position-absolute text-dark p-3 p-xl-4" id="video_{{ team.id }}">
+
+                                            <div id="hello_{{ team.id }}" style="">
+                                                <div class="font-weight-bold pb-2" >
+                                                    Titre :  {{ team.title? team.title: '' }}
+                                                </div>
+                                                <div class="font-weight-bold pb-2 truncate" style="text-align: justify"  data-toggle="tooltip" data-placement="bottom" title="{{ team.description }}">
+                                                       Description: <span style="color: #009ef7"> {{ team.description? team.description : '' }}</span>
+                                                </div>
+                                                <div class="font-weight-bold pb-2" >
+                                                    Date de publication :  {{ team.publishedAt? team.publishedAt|date('d-m-Y') : '' }}
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('.stopv').css('display', 'none');
+            $('#TeamMth').on('click', function () {
+                if ($(this).text() == "Team MTH"){
+                    $('#webinair').css('display', 'none');
+                    $('#Team').css('display', '');
+                    $(this).html('Webinaire');
+                }
+                else if ($(this).text() == "Webinaire"){
+                    $('#Team').css('display', 'none');
+                    $('#webinair').css('display', '');
+                    $(this).html('Team MTH');
+                }
+
+            });
+        });
+    $('.playv').click(function () {
+        var id=$(this).data('id');
+        $('#'+id).trigger('play');
+        $('#stop_'+id).css('display', '');
+        $('#play_'+id).css('display', 'none');
+        $('#hello_'+id).css('display', 'none');
+        $('#video_'+id).css('background', 'none');
+
+    });
+        $('.stopv').click(function () {
+            var id=$(this).data('id');
+            $('#'+id).trigger('pause');
+            $('#stop_'+id).css('display', 'none');
+            $('#play_'+id).css('display', '')
+            $('#hello_'+id).css('display', '');
+           // $('#video_'+id).css('background', 'rgba(0, 0, 0, 0.5)');
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function() {
+            var searchRequest = null;
+            $("#searchByDate").on('change',function () {
+                var minlength = 0;
+                var that      = this;
+                var value     = $(that).val();
+                if (value.length >= minlength){
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('webinaire.ajax.search.date') }}",
+                        dataType: "text",
+                        data: {
+                            'q' : value
+                        },
+                        success: function (data){
+                            if (value == $(that).val()){
+                                $("#webbinaire").html(data);
+                            }
+                        }
+                    });
+                }
+            });
+
+
+            $("#searchByTitle").keyup(function () {
+                var minlength = 0;
+                var that      = this;
+                var value     = $(that).val();
+                if (value.length >= minlength){
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('webinaire.ajax.search.title') }}",
+                        dataType: "text",
+                        data: {
+                            'q' : value
+                        },
+                        success: function (data){
+                            if (value == $(that).val()){
+                                $("#webbinaire").html(data);
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function() {
+            var searchRequest = null;
+            $("#searchByDateMth").on('change',function () {
+                var minlength = 0;
+                var that      = this;
+                var value     = $(that).val();
+                if (value.length >= minlength){
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('teamMth.ajax.search.date') }}",
+                        dataType: "text",
+                        data: {
+                            'q' : value
+                        },
+                        success: function (data){
+                            if (value == $(that).val()){
+                                $("#teams").html(data);
+                            }
+                        }
+                    });
+                }
+            });
+
+
+            $("#searchByCreteriaMth").keyup(function () {
+                var minlength = 0;
+                var that      = this;
+                var value     = $(that).val();
+                if (value.length >= minlength){
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('teamMth.ajax.search.title') }}",
+                        dataType: "text",
+                        data: {
+                            'q' : value
+                        },
+                        success: function (data){
+                            if (value == $(that).val()){
+                                $("#teams").html(data);
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        });
+    </script>
+{% endblock %}

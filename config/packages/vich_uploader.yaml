@@ -1,0 +1,64 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        user_image:
+            uri_prefix: /images/users
+            upload_destination: '%kernel.project_dir%/public/images/users'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        presedentWord_image:
+            uri_prefix: /images/presedentWord
+            upload_destination: '%kernel.project_dir%/public/images/presedentWord'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        video_files:
+            uri_prefix: /images/videos
+            upload_destination: '%kernel.project_dir%/public/images/video'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        news_files:
+            uri_prefix: /images/news
+            upload_destination: '%kernel.project_dir%/public/images/news'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        document_transverse:
+            uri_prefix: /upload/documents
+            upload_destination: '%kernel.project_dir%/public/upload/documents'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        version_document_transverse:
+            uri_prefix: /upload/versions
+            upload_destination: '%kernel.project_dir%/public/upload/versions'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        training:
+            uri_prefix: /upload/training
+            upload_destination: '%kernel.project_dir%/public/upload/training'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        realted_document_transverse:
+            uri_prefix: /upload/realted_document_transverse
+            upload_destination: '%kernel.project_dir%/public/upload/realted_document_transverse'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        team_mth_video:
+            uri_prefix: /upload/team_mth_video
+            upload_destination: '%kernel.project_dir%/public/upload/team_mth_video'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+        team_mth_document:
+            uri_prefix: /upload/team_mth_document
+            upload_destination: '%kernel.project_dir%/public/upload/team_mth_document'
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true

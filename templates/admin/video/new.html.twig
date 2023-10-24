@@ -1,0 +1,114 @@
+{% extends 'layout/app1.html.twig' %}
+{% block title %}Intranet{% endblock %}
+{% block breadcrumb %}
+    <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column me-3">
+            <!--begin::Title-->
+            <h1 class="d-flex text-white fw-bolder my-1 fs-3">Ajout webinaire</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">
+                    <a href="{{ path('home') }}" class="text-white text-hover-primary">Home</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                </li>
+                <li class="breadcrumb-item text-white opacity-75">
+                    <a href="{{ path('admin.video.index') }}" class="text-white text-hover-primary">Liste webinaires</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">Ajout webinaire</li>
+                <!--end::Item-->
+            </ul>
+        </div>
+        <div class="d-flex align-items-center py-3 py-md-1">
+
+            <a href="{{ path('admin.video.new') }}" class="btn btn-bg-white btn-active-color-primary" id="kt_toolbar_primary_button">Ajouter</a>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+
+
+    <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+        <!--begin::Post-->
+        <div class="content flex-row-fluid" id="kt_content">
+            <div class="card">
+                <div class="card-body pb-0">
+                    <div class="card-px text-center pb-5">
+                        <h2 class="fs-2x fw-bolder mb-0">Ajouter un nouveau webninaire</h2>
+                    </div>
+                    <div class=" px-5">
+                        {% include ('admin/video/_form.html.twig') %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--end::Post-->
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+        var $collectionHolder;
+        var $collectionHolderUser;
+        var $collectionHolderBuilding;
+        var $addTodoButtonBuilding = $('<button type="button" style="float: right; margin-right: 5px; margin-top: 10px" class="btn btn-primary button-1 text-white ctm-border-radius far fa-plus " title="Ajouter un tag"><i class="svg-icon svg-icon-muted"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"> <path d="M3 13V11C3 10.4 3.4 10 4 10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14H4C3.4 14 3 13.6 3 13Z" fill="black"/> <path d="M13 21H11C10.4 21 10 20.6 10 20V4C10 3.4 10.4 3 11 3H13C13.6 3 14 3.4 14 4V20C14 20.6 13.6 21 13 21Z" fill="black"/> </svg></span> </i></button>');
+        var $newLinkLiBuilding = $('#addbtn').append($addTodoButtonBuilding);
+
+        $(document).ready(function () {
+
+            $collectionHolderBuilding = $('ul.todosBuilding')
+
+            $collectionHolderBuilding.append($newLinkLiBuilding);
+
+            $collectionHolderBuilding.data('index', $collectionHolderBuilding.find(':input').length);
+
+            $addTodoButtonBuilding.on('click', function (e) {
+                addTodoFormBuilding($collectionHolderBuilding, $newLinkLiBuilding);
+
+            })
+
+        });
+
+        function addTodoFormBuilding($collectionHolder, $newLinkLi) {
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+            var newForm = prototype;
+            newForm = newForm.replace(/__name__/g, index);
+            $collectionHolder.data('index', index + 1);
+            var $newFormLi = $(" <div class='card-body' style='margin-left: -45px !important;margin-bottom: -61px!important;'> <div class='d-flex flex-wrap justify-content-around pb-2'> <li style='margin-top: 35px'></li></div> </div>").append(newForm);
+            $newLinkLi.before($newFormLi);
+            addTagFormDeleteLink($newFormLi, $collectionHolder);
+        }
+
+        function addTagFormDeleteLink($tagFormLi, $collectionHolder) {
+            var $removeFormButton = $('<button type="button" style="float: right; margin-top: 10px !important; margin-bottom: 20px" class="btn btn-danger button-1 text-white ctm-border-radius fa fa-minus" title="Supprimer" ><i class="svg-icon svg-icon-muted "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> <path d="M21 13H3C2.4 13 2 12.6 2 12C2 11.4 2.4 11 3 11H21C21.6 11 22 11.4 22 12C22 12.6 21.6 13 21 13Z" fill="black"/> </svg> </i></button>');
+            $tagFormLi.append($removeFormButton);
+
+            $removeFormButton.on('click', function (e) {
+                var index = $collectionHolder.data('index');
+                $collectionHolder.data('index', index - 1);
+                $tagFormLi.remove();
+            });
+        }
+
+        $('label').html(function(_,html) {
+            return html.replace(/(\(.*?\))/, "<span>$1</span>");
+        });
+    </script>
+{% endblock %}

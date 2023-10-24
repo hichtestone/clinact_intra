@@ -1,0 +1,130 @@
+{% extends 'layout/app.html.twig' %}
+{% block title %}Intranet{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">{% if edit %}Modifier {% else %}Ajouter{% endif%} utilisateurs</div>
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-lg-6 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Nom<span class="text-danger">*</span></label>
+                        {{ form_widget(form.firstName) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.firstName) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Prénom<span class="text-danger">*</span></label>
+                        {{ form_widget(form.lastName) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.lastName) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">email<span class="text-danger">*</span></label>
+                        {{ form_widget(form.email) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+                </div>
+              {#  <div class="col-lg-6 ">
+                    <div class="mb-3">
+                        <label class="form-label">Mot de passe <span class="text-danger">*</span> </label>
+                        {{ form_widget(form.password) }}
+                        <div class=" center-block" style="color: red">
+                            <button type="button" onclick="generatePassword()" class="btn btn-soft-primary button-1 text-black-50 ctm-border-radius" style="margin-top: 15px; margin-right: 10px; margin-left: 44px">
+                                Générer mot de passe </button>
+                            <button type="button"  onclick="readpassword()" class="btn btn-soft-secondary button-1 text-black-50 ctm-border-radius" style="margin-top: 15px" id="btnDisplayPwd">
+                                afficher mot de passe </button>
+                            <div class="form-error" style="color: red">
+                                {{ form_errors(form.password) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>#}
+                <div class="col-lg-6 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Numéro de téléphone<span class="text-danger">*</span></label>
+                        {{ form_widget(form.phone) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.phone) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Civilité<span class="text-danger">*</span></label>
+                        {{ form_widget(form.civility) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.civility) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">IS Admin:<span class="text-danger">*</span></label>
+                        {{ form_widget(form.isSuperAdmin) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.isSuperAdmin) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Mission<span class="text-danger">*</span></label>
+                        {{ form_widget(form.job) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.job) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Profil:<span class="text-danger">*</span></label>
+                        {{ form_widget(form.profile) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.profile) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Responsable hiérarchique:<span class="text-danger">*</span></label>
+                        {{ form_widget(form.parent) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.parent) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 ">
+                    <div class="mb-3">
+                        <label class="form-label" style="margin-bottom: 10px !important;">Photo de profil<span class="text-danger">*</span></label>
+                        {{ form_widget(form.imageFile) }}
+                        <div class="form-error" style="color: red">
+                            {{ form_errors(form.imageFile) }}
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-12">
+                <div style="float: right" >
+                    <button type="submit" class="btn btn btn-primary" style="margin-top: 5px">{% if edit %} Modifier{% else %} Enregistrer{% endif %}</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+{% endblock %}

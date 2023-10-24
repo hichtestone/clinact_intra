@@ -1,0 +1,68 @@
+{% extends 'layout/app1.html.twig' %}
+
+{% block title %}CLINACT{% endblock %}
+{% block  stylesheets%}
+
+{% endblock %}
+{% block breadcrumb %}
+    <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column me-3">
+            <!--begin::Title-->
+            <h1 class="d-flex text-white fw-bolder my-1 fs-3">Trombinoscope</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">
+                    <a href="{{ path('home') }}" class="text-white text-hover-primary">Home</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">Trombinoscope</li>
+                <!--end::Item-->
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}
+{% block body %}
+    <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+        <div class="content flex-row-fluid" id="kt_content">
+            <div class="card">
+                <div class="card-body p-lg-17">
+                    <div class="mb-18">
+                        <div class="text-center mb-17">
+                            <h3 class="fs-2hx text-dark mb-6" style="text-transform: uppercase">Le trombinoscope</h3>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 gy-10">
+                            {% for user in users %}
+                            <div class="col text-center mb-9">
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('{{ asset("images/users/"~user.fileName) }}')"></div>
+                                <div class="mb-0">
+                                    <a href="{{ path('showProfile',{'id': user.id}) }}" class="text-dark fw-bolder text-hover-primary fs-3">{{ user.firstName?user.firstName:'' }}  {{ user.lastName }}</a>
+                                    <div class="text-muted fs-6 fw-bold">{{ user.job?user.job.label: '' }}</div>
+                                    <div class="text-muted fs-6 fw-bold">{{ user.email?  user.email : '' }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+
+    </script>
+{% endblock %}
